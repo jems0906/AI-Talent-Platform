@@ -14,6 +14,7 @@ __pycache__/
 # Env
 .env
 .env.*
+!.env.example
 
 # Uploads and local storage
 storage/
@@ -22,3 +23,6 @@ uploads/
 # IDE
 .vscode/
 .idea/
+
+# Tooling artifacts
+.github/java-upgrade/
