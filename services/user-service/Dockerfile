@@ -1,7 +1,7 @@
 FROM maven:3.9-eclipse-temurin-25 AS build
 WORKDIR /app
-COPY pom.xml .
-COPY src ./src
+COPY services/user-service/pom.xml .
+COPY services/user-service/src ./src
 RUN mvn -q clean package -DskipTests
 
 FROM eclipse-temurin:25-jre
