@@ -96,15 +96,14 @@ services:
       - key: SMTP_FROM
         value: noreply@talent-platform.onrender.com
 
-  - type: static
+  - type: web
     name: frontend
-    staticPublishPath: ./frontend/dist
-    buildCommand: cd frontend && npm install && npm run build
-    routes:
-      - path: /api
-        destination: https://api-gateway.onrender.com
-      - path: /
-        destination: /index.html
+    runtime: docker
+    dockerfilePath: ./frontend/Dockerfile
+    plan: starter
+    envVars:
+      - key: VITE_API_BASE_URL
+        value: https://api-gateway.onrender.com
 
 databases:
   - name: talent_platform
