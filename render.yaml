@@ -27,13 +27,15 @@ services:
       - key: JWT_SECRET
         sync: false
       - key: USER_DB_URL
+        value: jdbc:postgresql://${PGHOST}:${PGPORT}/${PGDATABASE}
+      - key: DB_USERNAME
         fromDatabase:
           name: talent_platform
-          property: connectionString
-      - key: DB_USERNAME
-        value: postgres
+          property: user
       - key: DB_PASSWORD
-        sync: false
+        fromDatabase:
+          name: talent_platform
+          property: password
 
   - type: web
     name: candidate-service
@@ -44,13 +46,15 @@ services:
       - key: CANDIDATE_SERVICE_PORT
         value: 8082
       - key: CANDIDATE_DB_URL
+        value: jdbc:postgresql://${PGHOST}:${PGPORT}/${PGDATABASE}
+      - key: DB_USERNAME
         fromDatabase:
           name: talent_platform
-          property: connectionString
-      - key: DB_USERNAME
-        value: postgres
+          property: user
       - key: DB_PASSWORD
-        sync: false
+        fromDatabase:
+          name: talent_platform
+          property: password
       - key: JWT_SECRET
         sync: false
       - key: AI_SERVICE_URL
