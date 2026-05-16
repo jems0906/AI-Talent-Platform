@@ -26,8 +26,6 @@ services:
         value: 8081
       - key: JWT_SECRET
         sync: false
-      - key: USER_DB_URL
-        value: ""
       - key: PGHOST
         fromDatabase:
           name: talent_platform
@@ -57,8 +55,6 @@ services:
     envVars:
       - key: CANDIDATE_SERVICE_PORT
         value: 8082
-      - key: CANDIDATE_DB_URL
-        value: ""
       - key: PGHOST
         fromDatabase:
           name: talent_platform
@@ -135,8 +131,6 @@ services:
     plan: starter
     envVars:
       - key: API_GATEWAY_UPSTREAM
-        value: https://api-gateway.onrender.com
-      - key: VITE_API_BASE_URL
         value: https://api-gateway.onrender.com
 
 databases:

@@ -14,7 +14,9 @@
       "portMappings": [{ "containerPort": 8081, "hostPort": 8081 }],
       "environment": [
         { "name": "USER_SERVICE_PORT", "value": "8081" },
-        { "name": "USER_DB_URL", "value": "jdbc:postgresql://<RDS_ENDPOINT>:5432/talent_platform" },
+        { "name": "PGHOST", "value": "<RDS_ENDPOINT>" },
+        { "name": "PGPORT", "value": "5432" },
+        { "name": "PGDATABASE", "value": "talent_platform" },
         { "name": "DB_USERNAME", "value": "<DB_USERNAME>" },
         { "name": "DB_PASSWORD", "value": "<DB_PASSWORD>" },
         { "name": "JWT_SECRET", "value": "<JWT_SECRET>" }
