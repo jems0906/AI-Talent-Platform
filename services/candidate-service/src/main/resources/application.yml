@@ -3,7 +3,7 @@ server:
 
 spring:
   datasource:
-    url: ${CANDIDATE_DB_URL:jdbc:postgresql://localhost:5432/talent_platform}
+    url: jdbc:postgresql://${PGHOST:localhost}:${PGPORT:5432}/${PGDATABASE:talent_platform}
     username: ${DB_USERNAME:talent}
     password: ${DB_PASSWORD:talent123}
   jpa:

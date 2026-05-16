@@ -53,7 +53,9 @@ services:
     environment:
       USER_SERVICE_PORT: 8081
       JWT_SECRET: ${JWT_SECRET}
-      USER_DB_URL: ${USER_DB_URL}
+      PGHOST: postgres
+      PGPORT: 5432
+      PGDATABASE: talent_platform
       DB_USERNAME: ${DB_USERNAME}
       DB_PASSWORD: ${DB_PASSWORD}
     ports:
@@ -118,7 +120,9 @@ services:
       AI_SERVICE_URL: http://ai-ranking-service:8084
       NOTIFICATION_SERVICE_URL: http://notification-service:8083
       STORAGE_BASE_PATH: /app/storage
-      CANDIDATE_DB_URL: ${CANDIDATE_DB_URL}
+      PGHOST: postgres
+      PGPORT: 5432
+      PGDATABASE: talent_platform
       DB_USERNAME: ${DB_USERNAME}
       DB_PASSWORD: ${DB_PASSWORD}
       JWT_SECRET: ${JWT_SECRET}

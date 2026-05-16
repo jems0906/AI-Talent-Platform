@@ -5,7 +5,6 @@ RUN npm install
 COPY frontend/index.html ./
 COPY frontend/vite.config.js ./
 COPY frontend/src ./src
-COPY frontend/styles.css ./
 RUN npm run build
 
 FROM nginx:1.27-alpine

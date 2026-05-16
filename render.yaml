@@ -27,7 +27,19 @@ services:
       - key: JWT_SECRET
         sync: false
       - key: USER_DB_URL
-        value: jdbc:postgresql://${PGHOST}:${PGPORT}/${PGDATABASE}
+        value: ""
+      - key: PGHOST
+        fromDatabase:
+          name: talent_platform
+          property: host
+      - key: PGPORT
+        fromDatabase:
+          name: talent_platform
+          property: port
+      - key: PGDATABASE
+        fromDatabase:
+          name: talent_platform
+          property: database
       - key: DB_USERNAME
         fromDatabase:
           name: talent_platform
@@ -46,7 +58,19 @@ services:
       - key: CANDIDATE_SERVICE_PORT
         value: 8082
       - key: CANDIDATE_DB_URL
-        value: jdbc:postgresql://${PGHOST}:${PGPORT}/${PGDATABASE}
+        value: ""
+      - key: PGHOST
+        fromDatabase:
+          name: talent_platform
+          property: host
+      - key: PGPORT
+        fromDatabase:
+          name: talent_platform
+          property: port
+      - key: PGDATABASE
+        fromDatabase:
+          name: talent_platform
+          property: database
       - key: DB_USERNAME
         fromDatabase:
           name: talent_platform
