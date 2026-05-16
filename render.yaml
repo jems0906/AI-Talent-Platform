@@ -134,6 +134,8 @@ services:
     dockerfilePath: ./frontend/Dockerfile
     plan: starter
     envVars:
+      - key: API_GATEWAY_UPSTREAM
+        value: https://api-gateway.onrender.com
       - key: VITE_API_BASE_URL
         value: https://api-gateway.onrender.com
 
