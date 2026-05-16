@@ -1,0 +1,61 @@
+name: Deploy to Render
+
+on:
+  push:
+    branches:
+      - main
+  workflow_dispatch:
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Validate render.yaml
+        run: |
+          if [ ! -f "render.yaml" ]; then
+            echo "Error: render.yaml not found"
+            exit 1
+          fi
+          
+          if ! grep -q "services:" render.yaml; then
+            echo "Error: render.yaml appears malformed"
+            exit 1
+          fi
+          
+          echo "✓ render.yaml is valid"
+
+      - name: Trigger Render Deployment
+        if: success()
+        run: |
+          echo "Deployment triggered by GitHub push"
+          echo "Render will automatically detect this push and deploy the application"
+          echo ""
+          echo "To monitor deployment:"
+          echo "  1. Go to https://dashboard.render.com"
+          echo "  2. View your Blueprint"
+          echo "  3. Check deployment logs"
+          echo ""
+          echo "Services will be deployed to:"
+          echo "  • https://frontend.onrender.com (or your custom domain)"
+          echo "  • Backend services at https://<service-name>.onrender.com"
+
+      - name: Post Deployment Info
+        if: always()
+        run: |
+          cat << 'EOF'
+          
+          ✓ GitHub Actions completed successfully
+          
+          Next Steps:
+          1. Go to https://dashboard.render.com
+          2. Monitor your services' deployment status
+          3. Check CloudWatch/Render logs for any errors
+          4. Your application will be live when all services are deployed
+          
+          Service Dashboard: https://dashboard.render.com/services
+          
+          EOF

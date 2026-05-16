@@ -1,0 +1,15 @@
+server:
+  port: ${API_GATEWAY_PORT:8080}
+
+services:
+  user-url: ${USER_SERVICE_INTERNAL_URL:http://user-service:8081}
+  candidate-url: ${CANDIDATE_SERVICE_INTERNAL_URL:http://candidate-service:8082}
+  notification-url: ${NOTIFICATION_SERVICE_INTERNAL_URL:http://notification-service:8083}
+
+app:
+  jwt:
+    secret: ${JWT_SECRET:dev-secret-change-me}
+
+logging:
+  level:
+    root: INFO

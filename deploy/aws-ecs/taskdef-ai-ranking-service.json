@@ -1,0 +1,30 @@
+{
+  "family": "ai-talent-ai-ranking-service",
+  "networkMode": "awsvpc",
+  "requiresCompatibilities": ["FARGATE"],
+  "cpu": "256",
+  "memory": "512",
+  "executionRoleArn": "arn:aws:iam::<ACCOUNT_ID>:role/ecsTaskExecutionRole",
+  "taskRoleArn": "arn:aws:iam::<ACCOUNT_ID>:role/ai-talent-platform-task-role",
+  "containerDefinitions": [
+    {
+      "name": "ai-ranking-service",
+      "image": "<ACCOUNT_ID>.dkr.ecr.<REGION>.amazonaws.com/ai-talent-ai-ranking-service:latest",
+      "essential": true,
+      "portMappings": [{ "containerPort": 8084, "hostPort": 8084 }],
+      "environment": [
+        { "name": "AI_SERVICE_PORT", "value": "8084" },
+        { "name": "USE_OPENAI", "value": "false" },
+        { "name": "OPENAI_API_KEY", "value": "<OPENAI_API_KEY>" }
+      ],
+      "logConfiguration": {
+        "logDriver": "awslogs",
+        "options": {
+          "awslogs-group": "/ecs/ai-talent-ai-ranking-service",
+          "awslogs-region": "<REGION>",
+          "awslogs-stream-prefix": "ecs"
+        }
+      }
+    }
+  ]
+}

@@ -1,0 +1,24 @@
+# Node
+node_modules/
+dist/
+
+# Java
+**/target/
+*.log
+
+# Python
+__pycache__/
+*.pyc
+.venv/
+
+# Env
+.env
+.env.*
+
+# Uploads and local storage
+storage/
+uploads/
+
+# IDE
+.vscode/
+.idea/

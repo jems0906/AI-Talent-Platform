@@ -1,0 +1,27 @@
+server:
+  port: ${USER_SERVICE_PORT:8081}
+
+spring:
+  datasource:
+    url: ${USER_DB_URL:jdbc:postgresql://localhost:5432/talent_platform}
+    username: ${DB_USERNAME:talent}
+    password: ${DB_PASSWORD:talent123}
+  jpa:
+    hibernate:
+      ddl-auto: validate
+    properties:
+      hibernate:
+        format_sql: true
+  flyway:
+    enabled: true
+    baseline-on-migrate: true
+    baseline-version: 0
+    table: flyway_schema_history_user
+
+app:
+  jwt:
+    secret: ${JWT_SECRET:dev-secret-change-me}
+
+logging:
+  level:
+    root: INFO

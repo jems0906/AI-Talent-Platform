@@ -1,0 +1,33 @@
+{
+  "family": "ai-talent-notification-service",
+  "networkMode": "awsvpc",
+  "requiresCompatibilities": ["FARGATE"],
+  "cpu": "256",
+  "memory": "512",
+  "executionRoleArn": "arn:aws:iam::<ACCOUNT_ID>:role/ecsTaskExecutionRole",
+  "taskRoleArn": "arn:aws:iam::<ACCOUNT_ID>:role/ai-talent-platform-task-role",
+  "containerDefinitions": [
+    {
+      "name": "notification-service",
+      "image": "<ACCOUNT_ID>.dkr.ecr.<REGION>.amazonaws.com/ai-talent-notification-service:latest",
+      "essential": true,
+      "portMappings": [{ "containerPort": 8083, "hostPort": 8083 }],
+      "environment": [
+        { "name": "NOTIFICATION_SERVICE_PORT", "value": "8083" },
+        { "name": "SMTP_HOST", "value": "smtp.sendgrid.net" },
+        { "name": "SMTP_PORT", "value": "587" },
+        { "name": "SMTP_USERNAME", "value": "apikey" },
+        { "name": "SMTP_PASSWORD", "value": "<SMTP_PASSWORD>" },
+        { "name": "SMTP_FROM", "value": "noreply@talent-platform.local" }
+      ],
+      "logConfiguration": {
+        "logDriver": "awslogs",
+        "options": {
+          "awslogs-group": "/ecs/ai-talent-notification-service",
+          "awslogs-region": "<REGION>",
+          "awslogs-stream-prefix": "ecs"
+        }
+      }
+    }
+  ]
+}

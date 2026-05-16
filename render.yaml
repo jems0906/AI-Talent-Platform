@@ -1,0 +1,113 @@
+services:
+  - type: web
+    name: api-gateway
+    runtime: docker
+    dockerfilePath: ./services/api-gateway/Dockerfile
+    plan: starter
+    envVars:
+      - key: API_GATEWAY_PORT
+        value: 8080
+      - key: JWT_SECRET
+        sync: false
+      - key: USER_SERVICE_INTERNAL_URL
+        value: https://user-service.onrender.com
+      - key: CANDIDATE_SERVICE_INTERNAL_URL
+        value: https://candidate-service.onrender.com
+      - key: NOTIFICATION_SERVICE_INTERNAL_URL
+        value: https://notification-service.onrender.com
+
+  - type: web
+    name: user-service
+    runtime: docker
+    dockerfilePath: ./services/user-service/Dockerfile
+    plan: starter
+    envVars:
+      - key: USER_SERVICE_PORT
+        value: 8081
+      - key: JWT_SECRET
+        sync: false
+      - key: USER_DB_URL
+        value: postgresql://${DB_USER}:${DB_PASSWORD}@${DB_HOST}:5432/${DB_NAME}
+      - key: DB_USERNAME
+        fromDatabase: DB_USER
+      - key: DB_PASSWORD
+        fromDatabase: DB_PASSWORD
+
+  - type: web
+    name: candidate-service
+    runtime: docker
+    dockerfilePath: ./services/candidate-service/Dockerfile
+    plan: standard
+    envVars:
+      - key: CANDIDATE_SERVICE_PORT
+        value: 8082
+      - key: CANDIDATE_DB_URL
+        value: postgresql://${DB_USER}:${DB_PASSWORD}@${DB_HOST}:5432/${DB_NAME}
+      - key: DB_USERNAME
+        fromDatabase: DB_USER
+      - key: DB_PASSWORD
+        fromDatabase: DB_PASSWORD
+      - key: JWT_SECRET
+        sync: false
+      - key: AI_SERVICE_URL
+        value: https://ai-ranking-service.onrender.com
+      - key: NOTIFICATION_SERVICE_URL
+        value: https://notification-service.onrender.com
+      - key: STORAGE_PROVIDER
+        value: s3
+      - key: STORAGE_S3_BUCKET
+        sync: false
+      - key: AWS_REGION
+        value: us-east-1
+      - key: AWS_ACCESS_KEY_ID
+        sync: false
+      - key: AWS_SECRET_ACCESS_KEY
+        sync: false
+
+  - type: web
+    name: ai-ranking-service
+    runtime: docker
+    dockerfilePath: ./services/ai-ranking-service/Dockerfile
+    plan: starter
+    envVars:
+      - key: AI_SERVICE_PORT
+        value: 8084
+      - key: USE_OPENAI
+        value: false
+      - key: OPENAI_API_KEY
+        value: ""
+
+  - type: web
+    name: notification-service
+    runtime: docker
+    dockerfilePath: ./services/notification-service/Dockerfile
+    plan: starter
+    envVars:
+      - key: NOTIFICATION_SERVICE_PORT
+        value: 8083
+      - key: SMTP_HOST
+        value: smtp.sendgrid.net
+      - key: SMTP_PORT
+        value: 587
+      - key: SMTP_USERNAME
+        value: apikey
+      - key: SMTP_PASSWORD
+        sync: false
+      - key: SMTP_FROM
+        value: noreply@talent-platform.onrender.com
+
+  - type: static
+    name: frontend
+    staticPublishPath: ./frontend/dist
+    buildCommand: cd frontend && npm install && npm run build
+    routes:
+      - path: /api
+        destination: https://api-gateway.onrender.com
+      - path: /
+        destination: /index.html
+
+databases:
+  - name: talent_platform
+    databaseName: talent_platform
+    user: ${DB_USER}
+    passwordKey: DB_PASSWORD
